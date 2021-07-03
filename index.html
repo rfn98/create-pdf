@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>TEST PDF</title>
+</head>
+<body>
+	<button onclick="download()">Cetak</button>
+	<script src='pdfmake.min.js'></script>
+  	<script src='vfs_fonts.js'></script>
+  	<script src='base64.js'></script>
+  	<script type="text/javascript">
+  		 var docDefinition = { 
+  		 	content: [
+  		 		{ text:'PEMERINTAH KABUPATEN INDRAMAYU', style: { alignment: 'center', fontSize: 17, bold: true } },
+  		 		{ text:'KECAMATAN LOSARANG', style: { alignment: 'center', fontSize: 17, bold: true } },
+  		 		{ text:'DESA RANJENG', style: { alignment: 'center', fontSize: 17, characterSpacing: 5, bold: true } },
+  		 		// { canvas: [ { type: 'line', x1: 0, y1: 0, x2: 515, y2: 0, lineWidth: 1 } ]},
+  		 		{ text: '', border: [true,true,true,true]},
+  		 		{ text:'SURAT KETERANGAN DOMISILI', style: { alignment: 'center', fontSize: 12, bold: true } },
+  		 		{ text:'Nomor: 145/30', style: { alignment: 'center', fontSize: 12 } },
+  		 		{ text:'Yang bertanda tangan di bawah ini, Kuwu Desa Ranjeng Kecamatan Losarang Kabupaten Indramayu, dengan ini menerangkan bahwa:', style: { alignment: 'justify', fontSize: 12 } },
+  		 		// { canvas: [ { type: 'line', x1: 0, y1: 0, x2: 515, y2: 0, lineWidth: 1 } ]},
+  		 		// { image: 'desa' }
+  		 	],
+  		 	/*images: {
+  		 		desa: base64Image
+  		 	}*/
+  		 };
+  		 function download() {
+  		 	pdfMake.createPdf(docDefinition).download('surat.pdf');
+  		 }
+  	</script>
+</body>
+</html>
