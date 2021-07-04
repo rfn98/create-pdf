@@ -4,31 +4,92 @@
 	<title>TEST PDF</title>
 </head>
 <body>
+  <input type="text" class="no_surat" value="145/30/-01.Des./2021">
+  <select class="jns-surat">
+    <option value="SURAT KETERANGAN DOMISILI">SURAT KETERANGAN DOMISILI</option>
+    <option value="SURAT KETERANGAN USAHA">SURAT KETERANGAN USAHA</option>
+    <option value="SURAT KETERANGAN TIDAK MAMPU">SURAT KETERANGAN TIDAK MAMPU</option>
+    <option value="SURAT KETERANGAN KELAHIRAN">SURAT KETERANGAN KELAHIRAN</option>
+    <option value="SURAT KETERANGAN KEMATIAN">SURAT KETERANGAN KEMATIAN</option>
+  </select>
 	<button onclick="download()">Cetak</button>
 	<script src='pdfmake.min.js'></script>
   	<script src='vfs_fonts.js'></script>
   	<script src='base64.js'></script>
+    <script src='content-pdf.js'></script>
   	<script type="text/javascript">
-  		 var docDefinition = { 
-  		 	content: [
-  		 		{ text:'PEMERINTAH KABUPATEN INDRAMAYU', style: { alignment: 'center', fontSize: 17, bold: true } },
-  		 		{ text:'KECAMATAN LOSARANG', style: { alignment: 'center', fontSize: 17, bold: true } },
-  		 		{ text:'DESA RANJENG', style: { alignment: 'center', fontSize: 17, characterSpacing: 5, bold: true } },
-  		 		// { canvas: [ { type: 'line', x1: 0, y1: 0, x2: 515, y2: 0, lineWidth: 1 } ]},
-  		 		{ text: '', border: [true,true,true,true]},
-  		 		{ text:'SURAT KETERANGAN DOMISILI', style: { alignment: 'center', fontSize: 12, bold: true } },
-  		 		{ text:'Nomor: 145/30', style: { alignment: 'center', fontSize: 12 } },
-  		 		{ text:'Yang bertanda tangan di bawah ini, Kuwu Desa Ranjeng Kecamatan Losarang Kabupaten Indramayu, dengan ini menerangkan bahwa:', style: { alignment: 'justify', fontSize: 12 } },
-  		 		// { canvas: [ { type: 'line', x1: 0, y1: 0, x2: 515, y2: 0, lineWidth: 1 } ]},
-  		 		// { image: 'desa' }
-  		 	],
-  		 	/*images: {
-  		 		desa: base64Image
-  		 	}*/
-  		 };
-  		 function download() {
-  		 	pdfMake.createPdf(docDefinition).download('surat.pdf');
-  		 }
+        const borderLess = [false, false, false, false]
+        content.push(
+          { text: document.querySelector('.jns-surat').value, style: { alignment: 'center', fontSize: 12, bold: true } },
+          { canvas: [ { type: 'line', x1: 165, y1: 0, x2: 350, y2: 0, lineWidth: 1 } ]},
+          { text:'Nomor: ' + document.querySelector('.no_surat').value, style: { alignment: 'center', fontSize: 12 }, margin: [0, 0, 0, 25] },
+          { text:'Yang bertanda tangan di bawah ini, Kuwu Desa Ranjeng Kecamatan Losarang Kabupaten Indramayu, dengan ini menerangkan bahwa:', style: { alignment: 'justify' }, margin: [0, 0, 0, 25] },
+          {
+            table: {
+              widths: [ 125, 10, '*'],
+              body: [
+                [ 
+                  {text:'Nama', border: borderLess},
+                  {text:':', border: borderLess},
+                  {text:'CARWINAH', border: borderLess}
+                ],
+                [ 
+                  {text:'NIK', border: borderLess},
+                  {text:':', border: borderLess},
+                  {text:'3289849384983394', border: borderLess}
+                ],
+                [ 
+                  {text:'Tempat Tanggal Lahir', border: borderLess},
+                  {text:':', border: borderLess},
+                  {text:'Indramayu, 11 Mei 1942', border: borderLess}
+                ],
+                [ 
+                  {text:'Agama', border: borderLess},
+                  {text:':', border: borderLess},
+                  {text:'Islam', border: borderLess}
+                ],
+                [ 
+                  {text:'Pekerjaan', border: borderLess},
+                  {text:':', border: borderLess},
+                  {text:'Mengurus Rumah Tangga', border: borderLess}
+                ],
+                [ 
+                  {text:'Alamat', border: borderLess},
+                  {text:':', border: borderLess},
+                  {text:'Desa Ranjeng RT 001 RW 002 Kecamatan Losarang Kabupaten Indramayu', border: borderLess}
+                ]
+              ]
+            },
+            margin: [0, 0, 0, 25]
+          },
+          { text: 'Benar orang tersebut di atas penduduk masyarakat kami sampai saat ini dan sampai sekarang masih berdomisili di alamat tersebut di atas.', style: { alignment: 'justify' }, margin: [0, 0, 0, 25]},
+          { text: 'Demikian Surat Keterangan ini kami buat dengan sebenar-benarnya dan dapat dipergunakan sebagaimana mestinya.', style: { alignment: 'justify' }, margin: [0, 0, 0, 25]},
+          { table: {
+              width: [1000],
+              body: [
+                [
+                  { text: 'Ranjeng, 06 Mei 2021', alignment: 'center' }
+                ],
+                [
+                  { text: 'Pj. Kuwu Desa Ranjeng', margin: [0, 0, 0, 75], alignment: 'center' }
+                ],
+                [
+                  { text: 'EDI SUNARTO, S.IP', bold: true, decoration: 'underline', alignment: 'center' }
+                ],
+              ]
+            },
+            margin: [380, 0, 0, 0]
+          }
+        )
+  		  const docDefinition = { 
+  		 	  content: content,
+    		 	/*images: {
+    		 		desa: base64Image
+    		 	}*/
+  		  };
+  		  function download() {
+  		 	  pdfMake.createPdf(docDefinition).download(document.querySelector('.jns-surat').value + '.pdf');
+  		  }
   	</script>
 </body>
 </html>
